@@ -1,5 +1,8 @@
 package com.airflux.payload.response;
 
+import lombok.Builder;
+
+@Builder
 public class CityResponse {
 
     private Long id;

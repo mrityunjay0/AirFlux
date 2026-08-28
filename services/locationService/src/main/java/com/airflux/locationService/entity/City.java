@@ -2,8 +2,10 @@ package com.airflux.locationService.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
+import lombok.Builder;
 
 @Entity
+@Builder
 public class City {
 
     @Id
