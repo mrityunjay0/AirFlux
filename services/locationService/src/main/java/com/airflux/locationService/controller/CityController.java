@@ -74,5 +74,41 @@ public class CityController {
                 .body(new ApiResponse("City deleted successfully"));
     }
 
-    
+
+    // SEARCH CITIES
+    @GetMapping("/search")
+    public ResponseEntity<Page<CityResponse>> searchCities(
+            @RequestParam String keyword,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "20") int size
+            ) throws Exception {
+
+        Pageable pageable = PageRequest.of(page, size);
+        Page<CityResponse> responses = cityService.searchCitiesByKeyword(keyword,pageable);
+        return ResponseEntity.status(HttpStatus.OK).body(responses);
+    }
+
+
+    // GET CITIES BY COUNTRY CODE
+    @GetMapping("/countryCode/{countryCode}")
+    public ResponseEntity<Page<CityResponse>> getCitiesByCountryCode(
+            @RequestParam String countryCode,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "20") int size
+            ) throws Exception {
+
+        Pageable pageable = PageRequest.of(page, size);
+        Page<CityResponse> responses = cityService.getCitiesByCountryCode(countryCode.toUpperCase(),pageable);
+        return ResponseEntity.status(HttpStatus.OK).body(responses);
+    }
+
+
+    // CITY EXISTS
+    @GetMapping("/exists/{cityCode}")
+    public ResponseEntity<Boolean> existsByCityCode(@PathVariable String cityCode) throws Exception {
+
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(cityService.cityExists(cityCode.toUpperCase()));
+    }
+
 }
