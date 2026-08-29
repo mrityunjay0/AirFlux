@@ -31,7 +31,7 @@ public class CityMapper {
                 .countryCode(city.getCountryCode())
                 .countryName(city.getCountryName())
                 .regionCode(city.getRegionCode())
-//                .timeZone(city.getTimeZone())
+                .timeZone(city.getTimeZone())
                 .build();
     }
 

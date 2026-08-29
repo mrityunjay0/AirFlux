@@ -14,7 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/city")
+@RequestMapping("/api/v1/cities")
 public class CityController {
 
     private final CityService cityService;
@@ -24,7 +24,7 @@ public class CityController {
 
 
     // CREATE CITY
-    @PostMapping("/createCity")
+    @PostMapping
     public ResponseEntity<CityResponse> createCity(@Valid @RequestBody CityRequest cityRequest) throws Exception {
         CityResponse createdCity = cityService.createCity(cityRequest);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdCity);
@@ -35,12 +35,12 @@ public class CityController {
     @GetMapping("/{cityId}")
     public ResponseEntity<CityResponse> getCityById(@PathVariable Long cityId) throws Exception {
         CityResponse cityResponse = cityService.getCityById(cityId);
-        return ResponseEntity.status(HttpStatus.OK).body(cityResponse);
+        return ResponseEntity.ok(cityResponse);
     }
 
 
     // GET ALL CITIES (INTO PAGE FORMATE)
-    @GetMapping("/getAll")
+    @GetMapping
     public ResponseEntity<Page<CityResponse>> getAllCity(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "20") int size,
@@ -51,27 +51,28 @@ public class CityController {
         Sort sort = Sort.by(Sort.Direction.fromString(sortDirection), sortBy);
         Pageable pageable = PageRequest.of(page, size, sort);
         Page<CityResponse> responses = cityService.getAllCities(pageable);
-        return ResponseEntity.status(HttpStatus.OK).body(responses);
+        return ResponseEntity.ok(responses);
 
     }
 
 
     // UPDATE CITY
-    @PutMapping("/update/{cityId}")
+    @PutMapping("/{cityId}")
     public ResponseEntity<CityResponse> updateCity(@PathVariable Long cityId, @Valid @RequestBody CityRequest cityRequest) throws Exception {
 
         CityResponse updatedCity = cityService.updateCity(cityId, cityRequest);
-        return ResponseEntity.status(HttpStatus.OK).body(updatedCity);
+        return ResponseEntity.ok(updatedCity);
     }
 
 
     // DELETE CITY
-    @DeleteMapping("/delete/{cityId}")
+    @DeleteMapping("/{cityId}")
     public ResponseEntity<ApiResponse> deleteCity(@PathVariable Long cityId) throws Exception {
 
         cityService.deleteCity(cityId);
-        return ResponseEntity.status(HttpStatus.OK)
-                .body(new ApiResponse("City deleted successfully"));
+        return ResponseEntity.ok(
+                new ApiResponse("City deleted successfully")
+        );
     }
 
 
@@ -85,14 +86,14 @@ public class CityController {
 
         Pageable pageable = PageRequest.of(page, size);
         Page<CityResponse> responses = cityService.searchCitiesByKeyword(keyword,pageable);
-        return ResponseEntity.status(HttpStatus.OK).body(responses);
+        return ResponseEntity.ok(responses);
     }
 
 
     // GET CITIES BY COUNTRY CODE
-    @GetMapping("/countryCode/{countryCode}")
+    @GetMapping("/country/{countryCode}")
     public ResponseEntity<Page<CityResponse>> getCitiesByCountryCode(
-            @RequestParam String countryCode,
+            @PathVariable String countryCode,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "20") int size
             ) throws Exception {
@@ -107,8 +108,8 @@ public class CityController {
     @GetMapping("/exists/{cityCode}")
     public ResponseEntity<Boolean> existsByCityCode(@PathVariable String cityCode) throws Exception {
 
-        return ResponseEntity.status(HttpStatus.OK)
-                .body(cityService.cityExists(cityCode.toUpperCase()));
+        return ResponseEntity
+                .ok(cityService.cityExists(cityCode.toUpperCase()));
     }
 
 }

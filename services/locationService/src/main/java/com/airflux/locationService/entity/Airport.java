@@ -6,6 +6,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Builder;
 
+import java.time.ZoneId;
+
 @Entity
 @Builder
 public class Airport {
@@ -32,6 +34,16 @@ public class Airport {
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnore
     private City city;
+
+
+    @JsonIgnore
+    @Transient
+    public String getDetailedName(){
+        if(city != null && city.getCountryCode() != null){
+            return name.toUpperCase() + "/" + city.getCountryCode();
+        }
+        return name.toUpperCase();
+    }
 
 
     public Airport() {
