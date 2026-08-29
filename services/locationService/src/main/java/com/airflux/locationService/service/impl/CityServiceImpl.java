@@ -23,7 +23,7 @@ public class CityServiceImpl implements CityService {
     public CityResponse createCity(CityRequest cityRequest) throws Exception {
 
         if(cityRepository.existsByCityCode(cityRequest.getCityCode())){
-            throw new Exception("City with given code already exists.");
+            throw new Exception("City with given code: " + cityRequest.getCityCode() + " already exists.");
         }
 
         City city = CityMapper.toEntity(cityRequest);
@@ -37,7 +37,7 @@ public class CityServiceImpl implements CityService {
     public CityResponse getCityById(Long cityId) throws Exception {
 
         City city = cityRepository.findById(cityId).orElseThrow(
-                ()-> new Exception("City not exists with given ID.")
+                ()-> new Exception("City not exists with ID:" + cityId)
         );
 
         return CityMapper.toResponse(city);
@@ -47,45 +47,51 @@ public class CityServiceImpl implements CityService {
     public CityResponse updateCity(Long cityId, CityRequest cityRequest) throws Exception {
 
         City city = cityRepository.findById(cityId).orElseThrow(
-                ()-> new Exception("City not exists with given ID.")
+                ()-> new Exception("City not exists with ID:" + cityId)
         );
 
         if(cityRepository.existsByCityCodeAndIdNot(cityRequest.getCityCode(),cityId)){
-            throw new Exception("City with given code already exists.");
+            throw new Exception("City with given code: " + cityRequest.getCityCode() + " already exists.");
         }
 
         City updatedCity = cityRepository.save(CityMapper.updateEntity(city,cityRequest));
         return CityMapper.toResponse(updatedCity);
-        
+
     }
 
     @Override
-    public void deleteCity(Long cityId) {
+    public void deleteCity(Long cityId) throws Exception {
+
+        City city = cityRepository.findById(cityId).orElseThrow(
+                ()-> new Exception("City not exists with ID:" + cityId)
+        );
+
+        cityRepository.delete(city);
 
     }
 
     @Override
     public Page<CityResponse> getAllCities(Pageable pageable) {
-        return null;
+
+        return cityRepository.findAll(pageable).map(CityMapper::toResponse);
     }
 
     @Override
-    public Page<CityResponse> searchCities(String keyword, Pageable pageable) {
-        return null;
+    public Page<CityResponse> searchCitiesByKeyword(String keyword, Pageable pageable) {
+
+        return cityRepository.searchByKeyword(keyword, pageable).map(CityMapper::toResponse);
     }
 
     @Override
-    public Page<CityResponse> getCitiesByCountryCode(String countryCode) {
-        return null;
+    public Page<CityResponse> getCitiesByCountryCode(String countryCode, Pageable pageable) {
+
+        return cityRepository.findByCountryCodeIgnoreCase(countryCode,pageable).map(CityMapper::toResponse);
     }
 
     @Override
     public boolean cityExists(String cityCode) {
-        return false;
+
+        return cityRepository.existsByCityCode(cityCode);
     }
 
-    @Override
-    public boolean validateCityCode(String cityCode) {
-        return false;
-    }
 }

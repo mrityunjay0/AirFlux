@@ -11,13 +11,12 @@ public interface CityService {
     CityResponse getCityById(Long cityId) throws Exception;
     CityResponse updateCity(Long cityId, CityRequest cityRequest) throws Exception;
 
-    void deleteCity(Long cityId);
+    void deleteCity(Long cityId) throws Exception;
 
     Page<CityResponse> getAllCities(Pageable pageable);
-    Page<CityResponse> searchCities(String keyword, Pageable pageable);
-    Page<CityResponse> getCitiesByCountryCode(String countryCode);
+    Page<CityResponse> searchCitiesByKeyword(String keyword, Pageable pageable);
+    Page<CityResponse> getCitiesByCountryCode(String countryCode, Pageable pageable);
 
     boolean cityExists(String cityCode);
-    boolean validateCityCode(String cityCode);
 
 }
