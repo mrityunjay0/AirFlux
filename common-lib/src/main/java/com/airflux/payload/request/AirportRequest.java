@@ -23,7 +23,7 @@ public class AirportRequest {
     private Address address;
 
     @NotNull(message = "City ID is mandatory.")
-    private Long id;
+    private Long cityId;
 
     @Valid
     private GeoCode geoCode;
@@ -31,12 +31,12 @@ public class AirportRequest {
     public AirportRequest() {
     }
 
-    public AirportRequest(String iataCode, String name, String timeZone, Address address, Long id, GeoCode geoCode) {
+    public AirportRequest(String iataCode, String name, String timeZone, Address address, Long cityId, GeoCode geoCode) {
         this.iataCode = iataCode;
         this.name = name;
         this.timeZone = timeZone;
         this.address = address;
-        this.id = id;
+        this.cityId = cityId;
         this.geoCode = geoCode;
     }
 
@@ -72,12 +72,12 @@ public class AirportRequest {
         this.address = address;
     }
 
-    public Long getId() {
-        return id;
+    public Long getCityId() {
+        return cityId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setCityId(Long cityId) {
+        this.cityId = cityId;
     }
 
     public GeoCode getGeoCode() {

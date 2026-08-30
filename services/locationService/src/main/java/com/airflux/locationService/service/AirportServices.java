@@ -7,13 +7,13 @@ import java.util.List;
 
 public interface AirportServices {
 
-    AirportResponse createAirport(AirportRequest airportRequest);
+    AirportResponse createAirport(AirportRequest airportRequest) throws Exception;
 
-    AirportResponse getAirportById(Long id);
+    AirportResponse getAirportById(Long id) throws Exception;
     List<AirportResponse> getAllAirports();
     List<AirportResponse> getAirportsByCityId(Long cityId);
 
-    AirportResponse updateAirportById(Long id, AirportRequest airportRequest);
+    AirportResponse updateAirportById(Long id, AirportRequest airportRequest) throws Exception;
 
     void deleteAirportById(Long id);
 
