@@ -15,7 +15,7 @@ public interface CityRepository extends JpaRepository<City, Long> {
     Page<City> findByCountryCodeIgnoreCase(String countryCode, Pageable pageable);
 
     @Query("""
-        select c from city c
+        select c from City c
         where lower(c.name) like lower(concat('%', :keyword, '%'))
         or lower(c.cityCode) like lower(concat('%', :keyword, '%'))
         or lower(c.countryCode) like lower(concat('%', :keyword, '%'))
