@@ -62,7 +62,11 @@ public class AirportServiceImpl implements AirportServices {
 
     @Override
     public List<AirportResponse> getAirportsByCityId(Long cityId) {
-        return List.of();
+
+        return airportRepository.findByCityId(cityId).stream()
+                .map(AirportMapper::toResponse)
+                .collect(Collectors.toList());
+
     }
 
     @Override
@@ -72,11 +76,26 @@ public class AirportServiceImpl implements AirportServices {
                 ()-> new Exception("Airport with given id does not exists.")
         );
 
-        
+        if(airportRequest.getIataCode() != null &&
+            !airportRequest.getIataCode().equals(airport.getIataCode())
+            && airportRepository.findByIataCode(airportRequest.getIataCode()).isPresent()){
+                throw new Exception("Airport with given IATA Code already exists.");
+        }
+
+        Airport updatedAirport = airportRepository
+                .save(AirportMapper.updateEntity(airport, airportRequest));
+
+        return AirportMapper.toResponse(updatedAirport);
+
     }
 
     @Override
-    public void deleteAirportById(Long id) {
+    public void deleteAirportById(Long id) throws Exception {
 
+        Airport airport = airportRepository.findById(id).orElseThrow(
+                ()-> new Exception("Airport not found.")
+        );
+
+        airportRepository.delete(airport);
     }
 }

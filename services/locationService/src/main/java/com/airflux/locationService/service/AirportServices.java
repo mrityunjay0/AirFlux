@@ -15,6 +15,6 @@ public interface AirportServices {
 
     AirportResponse updateAirportById(Long id, AirportRequest airportRequest) throws Exception;
 
-    void deleteAirportById(Long id);
+    void deleteAirportById(Long id) throws Exception;
 
 }
