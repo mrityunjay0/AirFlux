@@ -11,6 +11,7 @@
     </parent>
 
     <artifactId>services</artifactId>
+
     <packaging>pom</packaging>
     <name>Business Services</name>
     <description>airflux (Aggregator for all business microservices)</description>
