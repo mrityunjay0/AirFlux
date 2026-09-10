@@ -54,12 +54,6 @@
 
         </dependencies>
     </dependencyManagement>
-    <dependencies>
-        <dependency>
-            <groupId>jakarta.validation</groupId>
-            <artifactId>jakarta.validation-api</artifactId>
-        </dependency>
-    </dependencies>
 
     <build>
         <pluginManagement>
@@ -73,6 +67,12 @@
                         <source>${java.version}</source>
                         <target>${java.version}</target>
                         <parameters>true</parameters>
+                        <annotationProcessorPaths>
+                            <path>
+                                <groupId>org.projectlombok</groupId>
+                                <artifactId>lombok</artifactId>
+                            </path>
+                        </annotationProcessorPaths>
                     </configuration>
                 </plugin>
 
