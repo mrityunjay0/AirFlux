@@ -8,8 +8,10 @@ import com.airflux.userService.entity.User;
 import com.airflux.userService.mapper.UserMapper;
 import com.airflux.userService.repository.UserRepository;
 import com.airflux.userService.service.AuthService;
+import com.airflux.userService.service.CustomUserDetailsService;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -20,10 +22,12 @@ public class AuthServiceImpl implements AuthService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final CustomUserDetailsService customUserDetailsService;
 
-    public AuthServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    public AuthServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder, CustomUserDetailsService customUserDetailsService) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
+        this.customUserDetailsService = customUserDetailsService;
     }
 
 
@@ -96,7 +100,36 @@ public class AuthServiceImpl implements AuthService {
      **/
 
     @Override
-    public AuthResponse login(String email, String password) {
-        return null;
+    public AuthResponse login(String email, String password) throws Exception {
+
+        Authentication authentication = authenticate(email, password);
+
+        User user = userRepository.findByEmail(email);
+        user.setLastLoginAt(LocalDateTime.now());
+        userRepository.save(user);
+
+        String token = new JwtProvider().generateToken(authentication, user.getId());
+
+        return AuthResponse.builder()
+                .jwtToken(token)
+                .message("User logged in successfully.")
+                .title("Welcome back, " + user.getFullName())
+                .user(UserMapper.toUserDTO(user))
+                .build();
+    }
+
+    private Authentication authenticate(String email, String password) throws Exception {
+
+        UserDetails userDetails = customUserDetailsService.loadUserByUsername(email);
+
+        if (!passwordEncoder.matches(password, userDetails.getPassword())) {
+            throw new Exception("Invalid password");
+        }
+
+        return new UsernamePasswordAuthenticationToken(
+                userDetails,
+                null,
+                userDetails.getAuthorities()
+        );
     }
 }
