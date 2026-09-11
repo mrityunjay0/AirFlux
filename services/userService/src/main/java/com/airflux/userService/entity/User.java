@@ -2,7 +2,7 @@ package com.airflux.userService.entity;
 
 import com.airflux.payload.enums.UserRole;
 import jakarta.persistence.*;
-import lombok.Builder;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
@@ -20,6 +20,9 @@ public class User {
     @Column(nullable = false, unique = true)
     private String email;
 
+    @Column(nullable = false)
+    private String password;
+
     private String phoneNumber;
 
     @Column(nullable = false)
@@ -35,10 +38,11 @@ public class User {
     public User() {
     }
 
-    public User(Long id, String fullName, String email, String phoneNumber, UserRole role, LocalDateTime createdAt, LocalDateTime updatedAt, LocalDateTime lastLoginAt) {
+    public User(Long id, String fullName, String email, String password, String phoneNumber, UserRole role, LocalDateTime createdAt, LocalDateTime updatedAt, LocalDateTime lastLoginAt) {
         this.id = id;
         this.fullName = fullName;
         this.email = email;
+        this.password = password;
         this.phoneNumber = phoneNumber;
         this.role = role;
         this.createdAt = createdAt;
@@ -68,6 +72,14 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getPhoneNumber() {
