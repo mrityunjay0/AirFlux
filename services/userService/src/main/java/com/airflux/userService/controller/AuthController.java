@@ -4,7 +4,6 @@ import com.airflux.payload.dto.UserDTO;
 import com.airflux.payload.request.LoginRequest;
 import com.airflux.payload.response.AuthResponse;
 import com.airflux.userService.service.AuthService;
-import com.airflux.userService.service.CustomUserDetailsService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;

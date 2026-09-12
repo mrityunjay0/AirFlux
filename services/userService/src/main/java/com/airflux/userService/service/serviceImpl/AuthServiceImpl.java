@@ -2,6 +2,9 @@ package com.airflux.userService.service.serviceImpl;
 
 import com.airflux.payload.dto.UserDTO;
 import com.airflux.payload.enums.UserRole;
+import com.airflux.payload.exception.DuplicateResourceException;
+import com.airflux.payload.exception.IllegalOperationException;
+import com.airflux.payload.exception.InvalidCredentialsException;
 import com.airflux.payload.response.AuthResponse;
 import com.airflux.userService.config.JwtProvider;
 import com.airflux.userService.entity.User;
@@ -23,11 +26,13 @@ public class AuthServiceImpl implements AuthService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final CustomUserDetailsService customUserDetailsService;
+    private final JwtProvider jwtProvider;
 
-    public AuthServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder, CustomUserDetailsService customUserDetailsService) {
+    public AuthServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder, CustomUserDetailsService customUserDetailsService, JwtProvider jwtProvider) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.customUserDetailsService = customUserDetailsService;
+        this.jwtProvider = jwtProvider;
     }
 
 
@@ -42,18 +47,18 @@ public class AuthServiceImpl implements AuthService {
      **/
 
     @Override
-    public AuthResponse signUp(UserDTO userDtoRequest) throws Exception {
+    public AuthResponse signUp(UserDTO userDtoRequest) {
 
         User user = userRepository.findByEmail(userDtoRequest.getEmail());
 
         // Check if user with given email already exists
         if(user != null) {
-            throw new Exception("User with given email already exists.");
+            throw new DuplicateResourceException("User with given email already exists.");
         }
 
         // Check role
         if(userDtoRequest.getRole() == UserRole.ROLE_SYSTEM_ADMIN) {
-            throw new Exception("Cannot create user with role SYSTEM_ADMIN.");
+            throw new IllegalOperationException("Cannot create user with role SYSTEM_ADMIN.");
         }
 
         // Create new user
@@ -78,7 +83,7 @@ public class AuthServiceImpl implements AuthService {
         );
 
         // Generate JWT token for the user
-        String token = new JwtProvider().generateToken(authentication, savedUser.getId());
+        String token = jwtProvider.generateToken(authentication, savedUser.getId());
 
         return AuthResponse.builder()
                 .jwtToken(token)
@@ -100,7 +105,7 @@ public class AuthServiceImpl implements AuthService {
      **/
 
     @Override
-    public AuthResponse login(String email, String password) throws Exception {
+    public AuthResponse login(String email, String password) {
 
         Authentication authentication = authenticate(email, password);
 
@@ -108,7 +113,7 @@ public class AuthServiceImpl implements AuthService {
         user.setLastLoginAt(LocalDateTime.now());
         userRepository.save(user);
 
-        String token = new JwtProvider().generateToken(authentication, user.getId());
+        String token = jwtProvider.generateToken(authentication, user.getId());
 
         return AuthResponse.builder()
                 .jwtToken(token)
@@ -118,12 +123,12 @@ public class AuthServiceImpl implements AuthService {
                 .build();
     }
 
-    private Authentication authenticate(String email, String password) throws Exception {
+    private Authentication authenticate(String email, String password) {
 
         UserDetails userDetails = customUserDetailsService.loadUserByUsername(email);
 
         if (!passwordEncoder.matches(password, userDetails.getPassword())) {
-            throw new Exception("Invalid password");
+            throw new InvalidCredentialsException("Invalid email or password.");
         }
 
         return new UsernamePasswordAuthenticationToken(

@@ -6,6 +6,8 @@ import com.airflux.locationService.mapper.AirportMapper;
 import com.airflux.locationService.repository.AirportRepository;
 import com.airflux.locationService.repository.CityRepository;
 import com.airflux.locationService.service.AirportServices;
+import com.airflux.payload.exception.DuplicateResourceException;
+import com.airflux.payload.exception.ResourceNotFoundException;
 import com.airflux.payload.request.AirportRequest;
 import com.airflux.payload.response.AirportResponse;
 import org.springframework.stereotype.Service;
@@ -25,15 +27,17 @@ public class AirportServiceImpl implements AirportServices {
 
 
     @Override
-    public AirportResponse createAirport(AirportRequest airportRequest) throws Exception {
+    public AirportResponse createAirport(AirportRequest airportRequest) {
 
         if(airportRepository.findByIataCode(airportRequest.getIataCode()).isPresent()){
-            throw new Exception("Airport with given IATA Code already exists.");
+            throw new DuplicateResourceException("Airport with IATA code "
+                    + airportRequest.getIataCode() + " already exists.");
         }
 
         City city = cityRepository.findById(airportRequest.getCityId())
-                .orElseThrow(() -> new Exception("City with id " + airportRequest.getCityId() + " not found.")
-                );
+                .orElseThrow(() -> new ResourceNotFoundException("City with id "
+                        + airportRequest.getCityId() + " not found."));
+
 
         Airport airport = AirportMapper.toEntity(airportRequest);
         airport.setCity(city);
@@ -43,10 +47,10 @@ public class AirportServiceImpl implements AirportServices {
     }
 
     @Override
-    public AirportResponse getAirportById(Long id) throws Exception {
+    public AirportResponse getAirportById(Long id) {
 
         Airport airport = airportRepository.findById(id).orElseThrow(
-                ()-> new Exception("Airport with given ID does not exists.")
+                ()-> new ResourceNotFoundException("Airport with given ID does not exists.")
         );
 
         return AirportMapper.toResponse(airport);
@@ -70,16 +74,16 @@ public class AirportServiceImpl implements AirportServices {
     }
 
     @Override
-    public AirportResponse updateAirportById(Long id, AirportRequest airportRequest) throws Exception {
+    public AirportResponse updateAirportById(Long id, AirportRequest airportRequest) {
 
         Airport airport = airportRepository.findById(id).orElseThrow(
-                ()-> new Exception("Airport with given id does not exists.")
+                ()-> new ResourceNotFoundException("Airport with given id does not exists.")
         );
 
         if(airportRequest.getIataCode() != null &&
             !airportRequest.getIataCode().equals(airport.getIataCode())
             && airportRepository.findByIataCode(airportRequest.getIataCode()).isPresent()){
-                throw new Exception("Airport with given IATA Code already exists.");
+                throw new DuplicateResourceException("Airport with given IATA Code already exists.");
         }
 
         Airport updatedAirport = airportRepository
@@ -90,10 +94,10 @@ public class AirportServiceImpl implements AirportServices {
     }
 
     @Override
-    public void deleteAirportById(Long id) throws Exception {
+    public void deleteAirportById(Long id) {
 
         Airport airport = airportRepository.findById(id).orElseThrow(
-                ()-> new Exception("Airport not found.")
+                ()-> new ResourceNotFoundException("Airport not found.")
         );
 
         airportRepository.delete(airport);
