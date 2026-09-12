@@ -4,6 +4,8 @@ import com.airflux.locationService.entity.City;
 import com.airflux.locationService.mapper.CityMapper;
 import com.airflux.locationService.repository.CityRepository;
 import com.airflux.locationService.service.CityService;
+import com.airflux.payload.exception.DuplicateResourceException;
+import com.airflux.payload.exception.ResourceNotFoundException;
 import com.airflux.payload.request.CityRequest;
 import com.airflux.payload.response.CityResponse;
 import org.springframework.data.domain.Page;
@@ -20,10 +22,10 @@ public class CityServiceImpl implements CityService {
 
 
     @Override
-    public CityResponse createCity(CityRequest cityRequest) throws Exception {
+    public CityResponse createCity(CityRequest cityRequest) {
 
         if(cityRepository.existsByCityCode(cityRequest.getCityCode())){
-            throw new Exception("City with given code: " + cityRequest.getCityCode() + " already exists.");
+            throw new DuplicateResourceException("City with given code: " + cityRequest.getCityCode() + " already exists.");
         }
 
         City city = CityMapper.toEntity(cityRequest);
@@ -34,24 +36,24 @@ public class CityServiceImpl implements CityService {
     }
 
     @Override
-    public CityResponse getCityById(Long cityId) throws Exception {
+    public CityResponse getCityById(Long cityId) {
 
         City city = cityRepository.findById(cityId).orElseThrow(
-                ()-> new Exception("City not exists with ID:" + cityId)
+                ()-> new ResourceNotFoundException("City not exists with ID:" + cityId)
         );
 
         return CityMapper.toResponse(city);
     }
 
     @Override
-    public CityResponse updateCity(Long cityId, CityRequest cityRequest) throws Exception {
+    public CityResponse updateCity(Long cityId, CityRequest cityRequest) {
 
         City city = cityRepository.findById(cityId).orElseThrow(
-                ()-> new Exception("City not exists with ID:" + cityId)
+                ()-> new ResourceNotFoundException("City not exists with ID:" + cityId)
         );
 
         if(cityRepository.existsByCityCodeAndIdNot(cityRequest.getCityCode(),cityId)){
-            throw new Exception("City with given code: " + cityRequest.getCityCode() + " already exists.");
+            throw new DuplicateResourceException("City with given code: " + cityRequest.getCityCode() + " already exists.");
         }
 
         City updatedCity = cityRepository.save(CityMapper.updateEntity(city,cityRequest));
@@ -60,10 +62,10 @@ public class CityServiceImpl implements CityService {
     }
 
     @Override
-    public void deleteCity(Long cityId) throws Exception {
+    public void deleteCity(Long cityId) {
 
         City city = cityRepository.findById(cityId).orElseThrow(
-                ()-> new Exception("City not exists with ID:" + cityId)
+                ()-> new ResourceNotFoundException("City not exists with ID:" + cityId)
         );
 
         cityRepository.delete(city);
