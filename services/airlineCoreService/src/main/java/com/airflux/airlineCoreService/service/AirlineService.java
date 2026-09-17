@@ -1,4 +1,4 @@
-package com.airflux.aircraftCoreService.service;
+package com.airflux.airlineCoreService.service;
 
 import com.airflux.payload.enums.AirlineStatus;
 import com.airflux.payload.request.AirlineRequest;

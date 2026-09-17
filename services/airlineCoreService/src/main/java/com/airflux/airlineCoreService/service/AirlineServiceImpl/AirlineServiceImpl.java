@@ -1,6 +1,6 @@
 package com.airflux.airlineCoreService.service.AirlineServiceImpl;
 
-import com.airflux.aircraftCoreService.service.AirlineService;
+import com.airflux.airlineCoreService.service.AirlineService;
 import com.airflux.payload.enums.AirlineStatus;
 import com.airflux.payload.request.AirlineRequest;
 import com.airflux.payload.response.AirlineDropdownItem;
