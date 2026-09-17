@@ -4,6 +4,5 @@ public enum AirlineStatus {
 
     ACTIVE,
     INACTIVE,
-    SUSPENDED,
-    TERMINATED
+    BANNED
 }
