@@ -1,5 +1,8 @@
 package com.airflux.airlineCoreService.service.AirlineServiceImpl;
 
+import com.airflux.airlineCoreService.entity.Airline;
+import com.airflux.airlineCoreService.mapper.AirlineMapper;
+import com.airflux.airlineCoreService.repository.AirlineRepository;
 import com.airflux.airlineCoreService.service.AirlineService;
 import com.airflux.payload.enums.AirlineStatus;
 import com.airflux.payload.request.AirlineRequest;
@@ -14,9 +17,18 @@ import java.util.List;
 @Service
 public class AirlineServiceImpl implements AirlineService {
 
+    private final AirlineRepository airlineRepository;
+
+    public AirlineServiceImpl(AirlineRepository airlineRepository) {
+        this.airlineRepository = airlineRepository;
+    }
+
     @Override
     public AirlineResponse createAirline(AirlineRequest airlineRequest, Long ownerId) {
-        return null;
+
+        Airline airline = AirlineMapper.toEntity(airlineRequest, ownerId);
+        Airline savedAirline = airlineRepository.save(airline);
+        return AirlineMapper.toResponse(savedAirline);
     }
 
     @Override
