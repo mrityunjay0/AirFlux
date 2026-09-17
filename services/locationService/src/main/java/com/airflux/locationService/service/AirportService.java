@@ -5,7 +5,7 @@ import com.airflux.payload.response.AirportResponse;
 
 import java.util.List;
 
-public interface AirportServices {
+public interface AirportService {
 
     AirportResponse createAirport(AirportRequest airportRequest);
 
