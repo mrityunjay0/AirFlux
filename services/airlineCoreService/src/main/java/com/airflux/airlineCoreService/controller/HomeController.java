@@ -1,4 +1,4 @@
-package com.airflux.aircraftCoreService.controller;
+package com.airflux.airlineCoreService.controller;
 
 import com.airflux.payload.response.ApiResponse;
 import org.springframework.web.bind.annotation.GetMapping;

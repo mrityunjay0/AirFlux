@@ -5,6 +5,8 @@ import com.airflux.payload.embeddable.Support;
 import com.airflux.payload.enums.AirlineStatus;
 import lombok.*;
 
+import java.time.Instant;
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -28,6 +30,9 @@ public class AirlineResponse {
 
     private Long ownerId;
     private UserDTO owner;
+
+    private Instant createdAt;
+    private Instant updatedAt;
     private Long updatedById;
 
     private CityResponse headQuaterCity;

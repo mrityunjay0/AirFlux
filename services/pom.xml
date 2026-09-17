@@ -20,7 +20,7 @@
     <modules>
         <module>locationService</module>
         <module>userService</module>
-        <module>aircraftCoreService</module>
+        <module>airlineCoreService</module>
     </modules>
 
 

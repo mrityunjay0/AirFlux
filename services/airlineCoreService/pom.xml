@@ -9,7 +9,7 @@
 		<relativePath>../pom.xml</relativePath>
 	</parent>
 
-	<artifactId>aircraftCoreService</artifactId>
+	<artifactId>airlineCoreService</artifactId>
 	<description>Manages aircraft core services</description>
 
 
