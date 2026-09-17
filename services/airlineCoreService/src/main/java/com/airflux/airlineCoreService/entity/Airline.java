@@ -1,5 +1,6 @@
-package com.airflux.aircraftCoreService.entity;
+package com.airflux.airlineCoreService.entity;
 
+import com.airflux.payload.embeddable.Support;
 import com.airflux.payload.enums.AirlineStatus;
 import jakarta.persistence.*;
 import lombok.*;
@@ -7,6 +8,8 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
 import java.time.Instant;
+import java.time.LocalDateTime;
+import java.util.Date;
 
 @Entity
 @Builder
@@ -26,6 +29,9 @@ public class Airline {
     @Column(nullable = false, unique = true)
     private String icaoCode;
 
+    @Column(unique = true ,nullable = false)
+    private Long ownerId;
+
     @Column(nullable = false)
     private String name;
 
@@ -41,6 +47,9 @@ public class Airline {
     private String alliance;
 
     private Long headQuaterCityId;
+
+    @Embedded
+    private Support support;
 
     private Long updatedById;
 
