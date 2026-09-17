@@ -17,12 +17,14 @@
         </processorPath>
         <module name="locationService" />
         <module name="common-lib" />
+        <module name="aircraftCoreService" />
         <module name="userService" />
       </profile>
     </annotationProcessing>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="aircraftCoreService" options="-parameters" />
       <module name="common-lib" options="-parameters" />
       <module name="locationService" options="-parameters" />
       <module name="userService" options="-parameters" />
