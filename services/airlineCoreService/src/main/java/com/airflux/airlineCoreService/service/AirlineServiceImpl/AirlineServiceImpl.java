@@ -110,6 +110,6 @@ public class AirlineServiceImpl implements AirlineService {
                         .logoUrl(a.getLogoUrl())
                         .build()
                 ).toList();
-        
+
     }
 }
