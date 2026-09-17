@@ -6,8 +6,14 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import lombok.*;
 
 
+@Setter
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class AirportRequest {
 
     @NotBlank(message = "iata code is required.")
@@ -28,63 +34,4 @@ public class AirportRequest {
     @Valid
     private GeoCode geoCode;
 
-    public AirportRequest() {
-    }
-
-    public AirportRequest(String iataCode, String name, String timeZone, Address address, Long cityId, GeoCode geoCode) {
-        this.iataCode = iataCode;
-        this.name = name;
-        this.timeZone = timeZone;
-        this.address = address;
-        this.cityId = cityId;
-        this.geoCode = geoCode;
-    }
-
-    public String getIataCode() {
-        return iataCode;
-    }
-
-    public void setIataCode(String iataCode) {
-        this.iataCode = iataCode;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getTimeZone() {
-        return timeZone;
-    }
-
-    public void setTimeZone(String timeZone) {
-        this.timeZone = timeZone;
-    }
-
-    public Address getAddress() {
-        return address;
-    }
-
-    public void setAddress(Address address) {
-        this.address = address;
-    }
-
-    public Long getCityId() {
-        return cityId;
-    }
-
-    public void setCityId(Long cityId) {
-        this.cityId = cityId;
-    }
-
-    public GeoCode getGeoCode() {
-        return geoCode;
-    }
-
-    public void setGeoCode(GeoCode geoCode) {
-        this.geoCode = geoCode;
-    }
 }

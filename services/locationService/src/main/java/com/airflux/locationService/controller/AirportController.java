@@ -1,6 +1,6 @@
 package com.airflux.locationService.controller;
 
-import com.airflux.locationService.service.AirportServices;
+import com.airflux.locationService.service.AirportService;
 import com.airflux.payload.request.AirportRequest;
 import com.airflux.payload.response.AirportResponse;
 import com.airflux.payload.response.ApiResponse;
@@ -15,17 +15,17 @@ import java.util.List;
 @RequestMapping("/api/v1/airports")
 public class AirportController {
 
-    private final AirportServices airportServices;
+    private final AirportService airportService;
 
-    public AirportController(AirportServices airportServices) {
-        this.airportServices = airportServices;
+    public AirportController(AirportService airportService) {
+        this.airportService = airportService;
     }
 
 
     // CREATE AIRPORT
     @PostMapping
     public ResponseEntity<AirportResponse> createAirport(@Valid @RequestBody AirportRequest airportRequest) throws Exception {
-        AirportResponse createdAirport = airportServices.createAirport(airportRequest);
+        AirportResponse createdAirport = airportService.createAirport(airportRequest);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdAirport);
     }
 
@@ -33,7 +33,7 @@ public class AirportController {
     // GET AIRPORT BY ID
     @GetMapping("/{id}")
     public ResponseEntity<AirportResponse> getAirportById(@PathVariable Long id) throws Exception {
-        AirportResponse airportResponse = airportServices.getAirportById(id);
+        AirportResponse airportResponse = airportService.getAirportById(id);
         return ResponseEntity.ok(airportResponse);
     }
 
@@ -41,7 +41,7 @@ public class AirportController {
     // GET ALL AIRPORTS
     @GetMapping
     public ResponseEntity<List<AirportResponse>> getAllAirports() {
-        List<AirportResponse> airportResponses = airportServices.getAllAirports();
+        List<AirportResponse> airportResponses = airportService.getAllAirports();
         return ResponseEntity.ok(airportResponses);
     }
 
@@ -49,7 +49,7 @@ public class AirportController {
     // GET AIRPORTS BY CITY ID
     @GetMapping("/city/{cityId}")
     public ResponseEntity<List<AirportResponse>> getAirportsByCityId(@PathVariable Long cityId) {
-        List<AirportResponse> airportResponses = airportServices.getAirportsByCityId(cityId);
+        List<AirportResponse> airportResponses = airportService.getAirportsByCityId(cityId);
         return ResponseEntity.ok(airportResponses);
     }
 
@@ -59,7 +59,7 @@ public class AirportController {
     public ResponseEntity<AirportResponse> updateAirport(@PathVariable Long id,
             @Valid @RequestBody AirportRequest airportRequest) throws Exception {
 
-        AirportResponse updatedAirport = airportServices.updateAirportById(id, airportRequest);
+        AirportResponse updatedAirport = airportService.updateAirportById(id, airportRequest);
         return ResponseEntity.ok(updatedAirport);
     }
 
@@ -67,7 +67,7 @@ public class AirportController {
     // DELETE AIRPORT
     @DeleteMapping("/{id}")
     public ResponseEntity<ApiResponse> deleteAirport(@PathVariable Long id) throws Exception {
-        airportServices.deleteAirportById(id);
+        airportService.deleteAirportById(id);
         return ResponseEntity.ok(new ApiResponse("Airport deleted successfully"));
     }
 }

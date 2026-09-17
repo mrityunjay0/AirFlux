@@ -5,7 +5,7 @@ import com.airflux.locationService.entity.City;
 import com.airflux.locationService.mapper.AirportMapper;
 import com.airflux.locationService.repository.AirportRepository;
 import com.airflux.locationService.repository.CityRepository;
-import com.airflux.locationService.service.AirportServices;
+import com.airflux.locationService.service.AirportService;
 import com.airflux.payload.exception.DuplicateResourceException;
 import com.airflux.payload.exception.ResourceNotFoundException;
 import com.airflux.payload.request.AirportRequest;
@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class AirportServiceImpl implements AirportServices {
+public class AirportServiceImpl implements AirportService {
 
     private final AirportRepository airportRepository;
     private final CityRepository cityRepository;
