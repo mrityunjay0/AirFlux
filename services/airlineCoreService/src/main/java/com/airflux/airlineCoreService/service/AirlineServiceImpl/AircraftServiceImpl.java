@@ -81,14 +81,30 @@ public class AircraftServiceImpl implements AircraftService {
             throw new ResourceNotFoundException("Aircraft with id: " + id + " not found");
         }
 
-        if(aircraftRepository.existsByCode(aircraft.getCode())) {
-            throw new DuplicateResourceException("Aircraft with code: " + aircraft.getCode() + " already exists");
+        if(aircraftRequest.getCode() != null
+                && !aircraft.getCode().equals(aircraftRequest.getCode())
+                && aircraftRepository.existsByCode(aircraftRequest.getCode())) {
+            throw new DuplicateResourceException("Aircraft with code: " + aircraftRequest.getCode() + " already exists");
         }
+
+        AircraftMapper.updateAircraft(aircraft, aircraftRequest);
+
+        return AircraftMapper.toResponse(aircraftRepository.save(aircraft));
 
     }
 
     @Override
     public void deleteAircraft(Long id, Long ownerId) {
 
+        Airline airline = airlineRepository.findByOwnerId(ownerId).orElseThrow(
+                () -> new ResourceNotFoundException("Airline with ownerId: " + ownerId + " not found")
+        );
+
+        Aircraft aircraft = aircraftRepository.findByIdAndAirlineId(id, airline.getId());
+        if(aircraft == null) {
+            throw new ResourceNotFoundException("Aircraft with id: " + id + " not found");
+        }
+
+        aircraftRepository.delete(aircraft);
     }
 }
