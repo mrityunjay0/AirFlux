@@ -45,6 +45,10 @@ public class Aircraft {
     @Column(name = "first_class_seats")
     private Integer firstClassSeats = 0;
 
+    private Integer maxAltitude;
+
+    private Integer rangeKm;
+
     @Column(name = "cruising_speed_kmh")
     private Integer cruisingSpeedKmh;
 
@@ -74,7 +78,7 @@ public class Aircraft {
     @Column(name = "updated_at", nullable = false)
     private Instant updatedAt;
 
-    private Integer getTotalSeats() {
+    public Integer getTotalSeats() {
         return economySeats + businessSeats
                 + premiumEconomySeats + firstClassSeats;
     }
