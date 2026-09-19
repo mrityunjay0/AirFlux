@@ -34,7 +34,7 @@ public class AircraftController {
 
     // GET AIRCRAFT BY ID
     @GetMapping("/{aircraftId}")
-    public ResponseEntity<AircraftResponse> getAircraftById(@RequestParam Long aircraftId) {
+    public ResponseEntity<AircraftResponse> getAircraftById(@PathVariable Long aircraftId) {
 
         return ResponseEntity.status(HttpStatus.OK)
                 .body(aircraftService.getAircraftById(aircraftId));
@@ -52,7 +52,7 @@ public class AircraftController {
 
     // UPDATE AIRCRAFT
     @PutMapping("/{aircraftId}")
-    public ResponseEntity<AircraftResponse> updateAircraft(@RequestParam Long aircraftId,
+    public ResponseEntity<AircraftResponse> updateAircraft(@PathVariable Long aircraftId,
                                                            @RequestBody AircraftRequest aircraftRequest,
                                                            @RequestHeader("X-User-Id") Long userId) {
 
@@ -63,7 +63,7 @@ public class AircraftController {
 
     // DELETE AIRCRAFT
     @DeleteMapping("/{aircraftId}")
-    public ResponseEntity<AircraftResponse> deleteAircraft(@RequestParam Long aircraftId,
+    public ResponseEntity<ApiResponse> deleteAircraft(@PathVariable Long aircraftId,
                                                            @RequestHeader("X-User-Id") Long userId) {
 
         aircraftService.deleteAircraft(aircraftId, userId);

@@ -99,21 +99,21 @@ public class AirlineController {
 
 
     // CHANGE STATUS BY ADMIN
-    @PostMapping("/{id}/approve")
+    @PostMapping("/{airlineId}/approve")
     public ResponseEntity<AirlineResponse> approveAirline(@PathVariable Long airlineId) {
 
         return ResponseEntity.status(HttpStatus.OK)
                 .body(airlineService.changeStatusByAdmin(airlineId, AirlineStatus.ACTIVE));
     }
 
-    @PostMapping("/{id}/suspend")
+    @PostMapping("/{airlineId}/suspend")
     public ResponseEntity<AirlineResponse> suspendAirline(@PathVariable Long airlineId) {
 
         return ResponseEntity.status(HttpStatus.OK)
                 .body(airlineService.changeStatusByAdmin(airlineId, AirlineStatus.INACTIVE));
     }
 
-    @PostMapping("/{id}/ban")
+    @PostMapping("/{airlineId}/ban")
     public ResponseEntity<AirlineResponse> banAirline(@PathVariable Long airlineId) {
 
         return ResponseEntity.status(HttpStatus.OK)
