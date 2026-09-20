@@ -3,6 +3,7 @@
   <component name="Encoding">
     <file url="file://$PROJECT_DIR$/common-lib/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/services/airlineCoreService/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/services/flightOpsService/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/services/locationService/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/services/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/services/src/main/resources" charset="UTF-8" />
