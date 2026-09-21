@@ -1,6 +1,9 @@
 package com.airflux.flightOpsService.service.flightServiceImpl;
 
 import com.airflux.flightOpsService.entity.Flight;
+import com.airflux.flightOpsService.entity.FlightInstance;
+import com.airflux.flightOpsService.mapper.FlightInstanceMapper;
+import com.airflux.flightOpsService.mapper.FlightMapper;
 import com.airflux.flightOpsService.repository.FlightInstanceRepository;
 import com.airflux.flightOpsService.repository.FlightRepository;
 import com.airflux.flightOpsService.service.FlightInstanceService;
@@ -38,7 +41,13 @@ public class FlightInstanceServiceImpl implements FlightInstanceService {
                 .totalSeats(90)
                 .build();
 
+        FlightInstance flightInstance = FlightInstanceMapper.toEntity(flightInstanceRequest,flight);
+        flightInstance.setTotalSeats(aircraftResponse.getTotalSeats());
+        flightInstance.setAvailableSeats(aircraftResponse.getTotalSeats());
 
+        FlightInstance savedFlightInstance = flightInstanceRepository.save(flightInstance);
+
+        return FlightMapper.toResponse(savedFlightInstance);
     }
 
     @Override
