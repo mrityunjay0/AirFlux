@@ -18,6 +18,5 @@ public interface FlightService {
 
     FlightResponse changeStatus(Long id, FlightStatus flightStatus);
 
-    void deleteFlight(Long id);
-
+    void deleteFlight(Long airlineId, Long id);
 }

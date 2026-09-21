@@ -6,6 +6,7 @@ import com.airflux.flightOpsService.repository.FlightRepository;
 import com.airflux.flightOpsService.service.FlightService;
 import com.airflux.payload.enums.FlightStatus;
 import com.airflux.payload.exception.DuplicateResourceException;
+import com.airflux.payload.exception.ResourceNotFoundException;
 import com.airflux.payload.request.FlightRequest;
 import com.airflux.payload.response.AircraftResponse;
 import com.airflux.payload.response.AirlineResponse;
@@ -44,27 +45,62 @@ public class FlightServiceImpl implements FlightService {
 
     @Override
     public Page<FlightResponse> getFlightsByAirline(Long airlineId, Long departureAirportId, Long arrivalAirportId, Pageable pageable) {
-        return null;
+
+        return flightRepository.findByAirlineId(airlineId, departureAirportId,
+                arrivalAirportId,pageable).map(this::convertToFlightResponse);
     }
 
     @Override
     public FlightResponse getFlightById(Long id) {
-        return null;
+
+        Flight flight = flightRepository.findById(id).orElseThrow(
+                () -> new ResourceNotFoundException("Flight with id: " + id + " not found.")
+        );
+
+        return convertToFlightResponse(flight);
     }
 
     @Override
     public FlightResponse updateFlight(Long id, FlightRequest flightRequest) {
-        return null;
+
+        Flight flight = flightRepository.findById(id).orElseThrow(
+                () -> new ResourceNotFoundException("Flight with id: " + id + " not found.")
+        );
+
+        if(flightRequest.getFlightNumber() != null &&
+                flightRepository.existsByFlightNumberAndIdNot(flightRequest
+                                                .getFlightNumber(), flight.getId())) {
+            throw new DuplicateResourceException("Flight number " + flightRequest.getFlightNumber() + " already exists.");
+        }
+
+        FlightMapper.updateFlight(flightRequest, flight);
+
+        Flight updatedFlight = flightRepository.save(flight);
+        return convertToFlightResponse(updatedFlight);
+
     }
 
     @Override
     public FlightResponse changeStatus(Long id, FlightStatus flightStatus) {
-        return null;
+
+        Flight flight = flightRepository.findById(id).orElseThrow(
+                () -> new ResourceNotFoundException("Flight with id: " + id + " not found.")
+        );
+
+        flight.setFlightStatus(flightStatus);
+        flightRepository.save(flight);
+
+        return convertToFlightResponse(flight);
     }
-
+    
     @Override
-    public void deleteFlight(Long id) {
+    public void deleteFlight(Long airlineId, Long id) {
 
+        Flight flight = flightRepository.findByAirlineAndId(airlineId, id).orElseThrow(
+                () -> new ResourceNotFoundException("Flight with id: " + id + " not found.")
+        );
+
+        flightRepository.delete(flight);
     }
 
 
