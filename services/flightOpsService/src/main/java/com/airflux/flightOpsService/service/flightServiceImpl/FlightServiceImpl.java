@@ -13,7 +13,8 @@ public class FlightServiceImpl implements FlightService {
 
     @Override
     public FlightResponse createFlight(Long airlineId, FlightRequest flightRequest) {
-        return null;
+
+
     }
 
     @Override

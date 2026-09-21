@@ -46,7 +46,6 @@ public class FlightMapper {
         if (flight == null || flightRequest == null) return;
 
         if(flightRequest.getFlightNumber() != null) flight.setFlightNumber(flightRequest.getFlightNumber());
-        if(flightRequest.getAirlineId() != null) flight.setAirlineId(flightRequest.getAirlineId());
         if(flightRequest.getAircraftId() != null) flight.setAircraftId(flightRequest.getAircraftId());
         if(flightRequest.getDepartureAirportId() != null) flight.setDepartureAirportId(flightRequest.getDepartureAirportId());
         if(flightRequest.getArrivalAirportId() != null) flight.setArrivalAirportId(flightRequest.getArrivalAirportId());
