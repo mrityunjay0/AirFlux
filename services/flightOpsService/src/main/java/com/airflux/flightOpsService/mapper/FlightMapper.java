@@ -1,7 +1,6 @@
 package com.airflux.flightOpsService.mapper;
 
 import com.airflux.flightOpsService.entity.Flight;
-import com.airflux.payload.enums.FlightStatus;
 import com.airflux.payload.request.FlightRequest;
 import com.airflux.payload.response.AircraftResponse;
 import com.airflux.payload.response.AirlineResponse;
