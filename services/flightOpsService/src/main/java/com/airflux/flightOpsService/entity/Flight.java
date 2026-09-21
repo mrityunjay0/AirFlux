@@ -22,11 +22,11 @@ public class Flight {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
+    @Column(unique = true, nullable = false)
     private String flightNumber;
 
     @Column(nullable = false)
-    private String airlineId;
+    private Long airlineId;
 
     @Column(nullable = false)
     private Long aircraftId;
