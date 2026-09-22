@@ -11,7 +11,7 @@ public interface FlightScheduleService {
 
     FlightScheduleResponse getFlightScheduleById(Long flightScheduleId);
 
-    List<FlightScheduleResponse> getFlightScheduleByAirline(Long userId);
+    List<FlightScheduleResponse> getFlightScheduleByAirline(Long airlineId);
 
     FlightScheduleResponse updateFlightSchedule(Long flightScheduleId, FlightScheduleRequest flightScheduleRequest);
 

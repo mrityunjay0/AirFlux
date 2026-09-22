@@ -8,5 +8,5 @@ import java.util.List;
 
 public interface FlightScheduleRepository extends JpaRepository<FlightSchedule, Long> {
 
-    List<FlightScheduleResponse> findByFlightAirlineId(Long airlineId);
+    List<FlightSchedule> findByFlightAirlineId(Long airlineId);
 }
