@@ -29,6 +29,8 @@ public class FlightServiceImpl implements FlightService {
     @Override
     public FlightResponse createFlight(Long airlineId, FlightRequest flightRequest) {
 
+        // todo : watch airlineId
+
         if(flightRepository.existsByFlightNumber(flightRequest.getFlightNumber())) {
             throw new DuplicateResourceException("Flight with given number: "
                     + flightRequest.getFlightNumber() + " already exists.");
@@ -45,6 +47,8 @@ public class FlightServiceImpl implements FlightService {
 
     @Override
     public Page<FlightResponse> getFlightsByAirline(Long airlineId, Long departureAirportId, Long arrivalAirportId, Pageable pageable) {
+
+        // todo : watch airlineId
 
         return flightRepository.findByAirlineId(airlineId, departureAirportId,
                 arrivalAirportId,pageable).map(this::convertToFlightResponse);
@@ -96,6 +100,8 @@ public class FlightServiceImpl implements FlightService {
     @Override
     public void deleteFlight(Long airlineId, Long id) {
 
+        // todo : watch airlineId
+
         Flight flight = flightRepository.findByAirlineAndId(airlineId, id).orElseThrow(
                 () -> new ResourceNotFoundException("Flight with id: " + id + " not found.")
         );
@@ -105,7 +111,7 @@ public class FlightServiceImpl implements FlightService {
 
 
     // For Flight entity to response req. parameters (It is subject of inter-service communication)
-    // will be implemented in future as during implementation of feign client.
+    // todo: will be implemented in future as during implementation of feign client.
     public FlightResponse convertToFlightResponse(Flight flight) {
 
         AircraftResponse aircraftResponse = AircraftResponse.builder()
