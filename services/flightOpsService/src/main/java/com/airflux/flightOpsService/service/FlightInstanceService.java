@@ -5,6 +5,8 @@ import com.airflux.payload.response.FlightInstanceResponse;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.time.LocalDate;
+
 public interface FlightInstanceService {
 
     FlightInstanceResponse createFlightInstance(FlightInstanceRequest flightInstanceRequest,
@@ -14,7 +16,7 @@ public interface FlightInstanceService {
 
     Page<FlightInstanceResponse> getFlightInstancesByAirlineId(Long airlineId, Long departureAirportId,
                                                                Long arrivalAirportId, Long flightId,
-                                                               Long onDate, Pageable pageable);
+                                                               LocalDate onDate, Pageable pageable);
 
     FlightInstanceResponse updateFlightInstance(Long flightInstanceId, FlightInstanceRequest flightInstanceRequest);
 
