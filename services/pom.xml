@@ -22,6 +22,7 @@
         <module>userService</module>
         <module>airlineCoreService</module>
         <module>flightOpsService</module>
+        <module>pricingService</module>
     </modules>
 
 

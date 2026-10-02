@@ -19,6 +19,7 @@
         <module name="airlineCoreService" />
         <module name="common-lib" />
         <module name="flightOpsService" />
+        <module name="pricingService" />
         <module name="userService" />
       </profile>
     </annotationProcessing>
@@ -29,6 +30,7 @@
       <module name="common-lib" options="-parameters" />
       <module name="flightOpsService" options="-parameters" />
       <module name="locationService" options="-parameters" />
+      <module name="pricingService" options="-parameters" />
       <module name="userService" options="-parameters" />
     </option>
   </component>
