@@ -1,5 +1,6 @@
 package com.airflux.payload.response;
 
+import com.airflux.payload.enums.CabinClassType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -19,6 +20,7 @@ public class FareResponse {
     private Character rbdCode;
     private Long flightId;
     private Long cabinClassId;
+    private CabinClassType cabinClassType;
 
     // Pricing
     private BigDecimal baseFare;

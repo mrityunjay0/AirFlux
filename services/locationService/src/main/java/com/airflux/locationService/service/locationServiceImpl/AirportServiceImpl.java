@@ -1,4 +1,4 @@
-package com.airflux.locationService.service.impl;
+package com.airflux.locationService.service.locationServiceImpl;
 
 import com.airflux.locationService.entity.Airport;
 import com.airflux.locationService.entity.City;

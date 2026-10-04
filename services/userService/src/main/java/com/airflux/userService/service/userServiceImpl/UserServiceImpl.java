@@ -1,4 +1,4 @@
-package com.airflux.userService.service.serviceImpl;
+package com.airflux.userService.service.userServiceImpl;
 
 import com.airflux.payload.dto.UserDTO;
 import com.airflux.payload.exception.ResourceNotFoundException;
