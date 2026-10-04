@@ -14,14 +14,14 @@ public interface FareService {
     FareResponse getFareById(Long fareId);
     List<FareResponse> getFaresByFlightIdAndCabinClassId(Long flightId, Long cabinClassId);
 
-    FareResponse updateFare(Long id, FareRequest fareRequest);
-
-    void deleteFareById(Long id);
-
     Map<Long, FareResponse> getLowestFaresPerFlight(
             List<Long> flightIds, Long cabinClassId
     );
     Map<Long, FareResponse> getFaresById(List<Long> fareIds);
+
+    FareResponse updateFare(Long id, FareRequest fareRequest);
+
+    void deleteFareById(Long id);
 
     // Only for Development and Testing purposes, not for production use
     List<Fare> getAllFares();
