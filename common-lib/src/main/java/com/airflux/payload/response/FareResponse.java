@@ -31,7 +31,7 @@ public class FareResponse {
     private String fareLabel;
 
     // Seat Benefits
-    private Boolean extraSeatSpacce;
+    private Boolean extraSeatSpace;
     private Boolean preferredSeatChoice;
     private Boolean advanceSeatSelection;
     private Boolean guaranteedSeatTogether;

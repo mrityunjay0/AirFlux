@@ -81,4 +81,15 @@ public class Fare {
     @UpdateTimestamp
     private Instant updatedAt;
 
+
+    // Calculate total price by summing baseFare, taxesAndFees, and currentPrice
+    public BigDecimal getTotalPrice() {
+
+        BigDecimal base = baseFare != null ? baseFare : BigDecimal.ZERO;
+        BigDecimal taxes = taxesAndFees != null ? taxesAndFees : BigDecimal.ZERO;
+        BigDecimal current = currentPrice != null ? currentPrice : BigDecimal.ZERO;
+
+        return base.add(taxes).add(current);
+    }
+
 }
