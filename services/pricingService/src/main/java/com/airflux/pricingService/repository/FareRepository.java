@@ -15,5 +15,5 @@ public interface FareRepository extends JpaRepository<Fare, Long> {
                                                            String name, Long id
     );
 
-    List<Fare> findByFlightIdAndCabinClassId(List<Long> flightId, Long cabinClassId);
+    List<Fare> findByFlightIdInAndCabinClassId(List<Long> flightId, Long cabinClassId);
 }

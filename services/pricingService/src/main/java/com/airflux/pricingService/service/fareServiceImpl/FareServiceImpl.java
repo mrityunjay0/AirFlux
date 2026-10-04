@@ -101,7 +101,7 @@ public class FareServiceImpl implements FareService {
             return Map.of();
         }
 
-        List<Fare> fares = fareRepository.findByFlightIdAndCabinClassId(
+        List<Fare> fares = fareRepository.findByFlightIdInAndCabinClassId(
                 flightIds,
                 cabinClassId
         );
