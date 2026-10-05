@@ -31,7 +31,7 @@ public class FareRuleController {
     }
 
     @GetMapping("/{fareRulesId}")
-    public ResponseEntity<FareRulesResponse> getFareRules(@PathVariable Long fareRulesId) {
+    public ResponseEntity<FareRulesResponse> getFareRulesById(@PathVariable Long fareRulesId) {
 
         return ResponseEntity.status(HttpStatus.OK)
                 .body(fareRulesService.getFareRulesById(fareRulesId));
@@ -45,7 +45,7 @@ public class FareRuleController {
     }
 
     @GetMapping("/{airlineId}")
-    public ResponseEntity<List<FareRulesResponse>> getFareByAirlineId(@PathVariable Long airlineId) {
+    public ResponseEntity<List<FareRulesResponse>> getFareRulesByAirlineId(@PathVariable Long airlineId) {
 
         return ResponseEntity.status(HttpStatus.OK)
                 .body(fareRulesService.getFareRulesByAirlineId(airlineId));
