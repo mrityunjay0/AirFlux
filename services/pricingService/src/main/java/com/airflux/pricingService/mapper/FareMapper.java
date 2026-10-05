@@ -131,6 +131,7 @@ public class FareMapper {
                 .currentPrice(fare.getCurrentPrice())
                 .totalPrice(calculateTotalPrice(fare))
                 .fareLabel(fare.getFareLabel())
+                .fareRulesId(fare.getFareRules() != null ? fare.getFareRules().getId() : null)
 
                 .extraSeatSpace(
                         fare.getSeatBenefits() != null
@@ -238,6 +239,10 @@ public class FareMapper {
                                 fare.getPremiumServiceBenefits().getAirportTransfer()
                         )
                 )
+                .fareRuleResponse(fare.getFareRules() != null ?
+                        FareRulesMapper.toResponse(fare.getFareRules()) : null)
+                .baggagePolicyResponse(fare.getBaggagePolicy() != null ?
+                        BaggagePolicyMapper.toResponse(fare.getBaggagePolicy()) : null)
 
                 .createdAt(fare.getCreatedAt())
                 .updatedAt(fare.getUpdatedAt())
