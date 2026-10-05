@@ -3,7 +3,12 @@ package com.airflux.pricingService.repository;
 import com.airflux.pricingService.entity.BaggagePolicy;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface BaggagePolicyRepository extends JpaRepository<Long, BaggagePolicy> {
+import java.util.List;
+import java.util.Optional;
 
+public interface BaggagePolicyRepository extends JpaRepository<BaggagePolicy, Long> {
 
+    Optional<BaggagePolicy> findByFareId(Long fareId);
+    List<BaggagePolicy> findByAirlineId(Long airlineId);
+    boolean existsByFareId(Long fareId);
 }

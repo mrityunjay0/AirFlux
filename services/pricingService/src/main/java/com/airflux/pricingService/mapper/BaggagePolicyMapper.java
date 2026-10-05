@@ -17,7 +17,8 @@ public class BaggagePolicyMapper {
                 .description(request.getDescription())
                 .cabinBaggageMaxWeight(request.getCabinBaggageMaxWeight())
                 .cabinBaggagePieces(request.getCabinBaggagePieces())
-                .chckinBaggageMaxWeight(request.getCheckInBaggageMaxWeight())
+                .cabinBaggageWeightPerPiece(request.getCabinBaggageWeightPerPeice())
+                .checkInBaggageMaxWeight(request.getCheckInBaggageMaxWeight())
                 .chckinBaggagePeices(request.getChckinBaggagePieces())
                 .checkInBaggageWeightPerPiece(request.getCheckInBaggageWeightPerPeice())
                 .freeCheckedBagsAllowance(request.getFreeCheckedBagsAllowance())
@@ -33,11 +34,13 @@ public class BaggagePolicyMapper {
         return BaggagePolicyResponse.builder()
                 .id(baggagePolicy.getId())
                 .fareId(baggagePolicy.getFare() != null ? baggagePolicy.getFare().getId() : null)
+                .airlineId(baggagePolicy.getAirlineId())
                 .name(baggagePolicy.getName())
                 .description(baggagePolicy.getDescription())
                 .cabinBaggageMaxWeight(baggagePolicy.getCabinBaggageMaxWeight())
                 .cabinBaggagePieces(baggagePolicy.getCabinBaggagePieces())
-                .checkInBaggageMaxWeight(baggagePolicy.getChckinBaggageMaxWeight())
+                .cabinBaggageWeightPerPeice(baggagePolicy.getCabinBaggageWeightPerPiece())
+                .checkInBaggageMaxWeight(baggagePolicy.getCheckInBaggageMaxWeight())
                 .checkInBaggagePieces(baggagePolicy.getChckinBaggagePeices())
                 .checkInBaggageWeightPerPiece(baggagePolicy.getCheckInBaggageWeightPerPiece())
                 .freeCheckedBagsAllowance(baggagePolicy.getFreeCheckedBagsAllowance())
@@ -73,8 +76,14 @@ public class BaggagePolicyMapper {
             );
         }
 
+        if(request.getCabinBaggageWeightPerPeice() != null) {
+            entity.setCabinBaggageWeightPerPiece(
+                    request.getCabinBaggageWeightPerPeice()
+            );
+        }
+
         if (request.getCheckInBaggageMaxWeight() != null) {
-            entity.setChckinBaggageMaxWeight(
+            entity.setCheckInBaggageMaxWeight(
                     request.getCheckInBaggageMaxWeight()
             );
         }
@@ -109,4 +118,5 @@ public class BaggagePolicyMapper {
             );
         }
     }
+
 }

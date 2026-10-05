@@ -26,12 +26,17 @@ public class BaggagePolicy {
     @JsonIgnore
     private Fare fare;
 
+    @Column(name = "airline_id")
+    private Long airlineId;
+
     @Column(nullable = false)
     private String name;
 
     private String description;
 
     private Double cabinBaggageMaxWeight;
+
+    private Double cabinBaggageWeightPerPiece;
 
     private Integer cabinBaggagePieces = 1;
 
