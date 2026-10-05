@@ -14,9 +14,9 @@ public interface FlightInstanceRepository extends JpaRepository<FlightInstance, 
 
     @Query("""
             select fi from FlightInstance fi
-            where fi.airlineId = airlineId
+            where fi.airlineId = :airlineId
             and (:departureAirportId is null or fi.departureAirportId = :departureAirportId)
-            and (:arrivalAirportId is null or fi.arrivalAirportId = : arrivalAirportId)
+            and (:arrivalAirportId is null or fi.arrivalAirportId = :arrivalAirportId)
             and (:flightId is null or fi.flight.id = :flightId)
             and (:dayStart is null or fi.departureDateTime >= :dayStart)
             and (:dayEnd is null or fi.arrivalDateTime <= :dayEnd)

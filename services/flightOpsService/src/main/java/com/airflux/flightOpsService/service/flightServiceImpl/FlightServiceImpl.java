@@ -37,6 +37,7 @@ public class FlightServiceImpl implements FlightService {
         }
 
         Flight flight = FlightMapper.toEntity(flightRequest);
+        flight.setAirlineId(airlineId);
 
         Flight savedFlight = flightRepository.save(flight);
 
@@ -102,7 +103,7 @@ public class FlightServiceImpl implements FlightService {
 
         // todo : watch airlineId
 
-        Flight flight = flightRepository.findByAirlineAndId(airlineId, id).orElseThrow(
+        Flight flight = flightRepository.findByAirlineIdAndId(airlineId, id).orElseThrow(
                 () -> new ResourceNotFoundException("Flight with id: " + id + " not found.")
         );
 

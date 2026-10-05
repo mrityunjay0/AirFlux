@@ -22,7 +22,7 @@ public class FlightRequest {
     @Size(max = 10)
     private String flightNumber;
 
-    private String airlineId;
+//    private String airlineId;
 
     @NotNull(message = "Aircraft id is required.")
     private Long aircraftId;

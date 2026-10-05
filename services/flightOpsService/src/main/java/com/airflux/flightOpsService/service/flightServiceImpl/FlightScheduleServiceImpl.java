@@ -99,7 +99,7 @@ public class FlightScheduleServiceImpl implements FlightScheduleService {
     public List<FlightScheduleResponse> getFlightScheduleByAirline(Long airlineId) {
 
         // todo: watch airlineId
-        List<FlightSchedule> flightScheduleList = flightScheduleRepository.findByFlightAirlineId(airlineId);
+        List<FlightSchedule> flightScheduleList = flightScheduleRepository.findByScheduledFlight_AirlineId(airlineId);
 
         return flightScheduleList.stream().map(
                 this::convertToFlightScheduleResponse
