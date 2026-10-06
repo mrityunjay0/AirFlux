@@ -35,7 +35,7 @@ public class SeatMapController {
                 .body(seatMapService.getSeatMapById(seatMapId));
     }
 
-    @GetMapping("/{cabinClassId}")
+    @GetMapping("/cabin-class/{cabinClassId}")
     public ResponseEntity<SeatMapResponse> getSeatMapByCabin(@PathVariable Long cabinClassId) {
 
         return ResponseEntity.status(HttpStatus.OK)
@@ -44,7 +44,7 @@ public class SeatMapController {
 
     @PutMapping("/{id}")
     public ResponseEntity<SeatMapResponse> updateSeatMap(@PathVariable Long id,
-                                                         @Valid @RequestBody SeatMapRequest seatMapRequest) {
+                                                         @RequestBody SeatMapRequest seatMapRequest) {
 
         return ResponseEntity.status(HttpStatus.OK)
                 .body(seatMapService.updateSeatMap(id, seatMapRequest));
