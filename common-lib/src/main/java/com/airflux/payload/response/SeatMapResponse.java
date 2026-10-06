@@ -1,5 +1,6 @@
 package com.airflux.payload.response;
 
+import com.airflux.payload.enums.CabinClassType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -23,8 +24,8 @@ public class SeatMapResponse {
     private String airlineCode;
 
     private Long cabinClassId;
-    private String cabinClassName;
     private String cabinClassCode;
+    private CabinClassType cabinClassName;
 
     private Integer totalSeats;
     private Integer availableSeats;

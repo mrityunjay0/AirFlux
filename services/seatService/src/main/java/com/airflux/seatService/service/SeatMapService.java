@@ -5,7 +5,7 @@ import com.airflux.payload.response.SeatMapResponse;
 
 public interface SeatMapService {
 
-    SeatMapResponse createSeatMap(Long userId, SeatMapRequest seatMapRequest);
+    SeatMapResponse createSeatMap(Long airlineId, SeatMapRequest seatMapRequest);
 
     SeatMapResponse getSeatMapById(Long id);
     SeatMapResponse getSeatMapByCabinClass(Long cabinClassId);
