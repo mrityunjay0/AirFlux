@@ -1,4 +1,4 @@
-package com.airflux.seatService;
+package com.airflux.seatService.repository;
 
 import com.airflux.payload.enums.CabinClassType;
 import com.airflux.seatService.entity.CabinClass;

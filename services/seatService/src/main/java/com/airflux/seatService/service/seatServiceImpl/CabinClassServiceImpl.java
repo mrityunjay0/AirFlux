@@ -5,7 +5,7 @@ import com.airflux.payload.exception.DuplicateResourceException;
 import com.airflux.payload.exception.ResourceNotFoundException;
 import com.airflux.payload.request.CabinClassRequest;
 import com.airflux.payload.response.CabinClassResponse;
-import com.airflux.seatService.CabinClassRepository;
+import com.airflux.seatService.repository.CabinClassRepository;
 import com.airflux.seatService.entity.CabinClass;
 import com.airflux.seatService.mapper.CabinClassMapper;
 import com.airflux.seatService.service.CabinClassService;
