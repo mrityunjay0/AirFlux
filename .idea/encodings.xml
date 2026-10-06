@@ -6,6 +6,7 @@
     <file url="file://$PROJECT_DIR$/services/flightOpsService/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/services/locationService/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/services/pricingService/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/services/seatService/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/services/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/services/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/services/userService/src/main/java" charset="UTF-8" />

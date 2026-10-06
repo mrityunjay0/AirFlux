@@ -16,10 +16,11 @@
           <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.46/lombok-1.18.46.jar" />
         </processorPath>
         <module name="locationService" />
+        <module name="pricingService" />
+        <module name="seatService" />
         <module name="airlineCoreService" />
         <module name="common-lib" />
         <module name="flightOpsService" />
-        <module name="pricingService" />
         <module name="userService" />
       </profile>
     </annotationProcessing>
@@ -31,6 +32,7 @@
       <module name="flightOpsService" options="-parameters" />
       <module name="locationService" options="-parameters" />
       <module name="pricingService" options="-parameters" />
+      <module name="seatService" options="-parameters" />
       <module name="userService" options="-parameters" />
     </option>
   </component>

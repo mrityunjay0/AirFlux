@@ -18,11 +18,12 @@
 
 
     <modules>
-        <module>locationService</module>
-        <module>userService</module>
         <module>airlineCoreService</module>
         <module>flightOpsService</module>
+        <module>locationService</module>
         <module>pricingService</module>
+        <module>seatService</module>
+        <module>userService</module>
     </modules>
 
 
