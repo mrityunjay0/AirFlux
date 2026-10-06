@@ -31,9 +31,8 @@ public class CabinClass {
 
     private String description;
 
-    // todo: watch
-//    @OneToOne(cascade = CascadeType.ALL)
-//    private SeatMap seatMap;
+    @OneToOne(mappedBy = "cabinClass", cascade = CascadeType.ALL, orphanRemoval = true)
+    private SeatMap seatMap;
 
     @Column(nullable = false)
     private Long aircraftId;
