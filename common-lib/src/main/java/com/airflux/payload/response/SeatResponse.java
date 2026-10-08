@@ -12,4 +12,6 @@ import lombok.NoArgsConstructor;
 public class SeatResponse {
 
     private Long id;
+
+
 }
