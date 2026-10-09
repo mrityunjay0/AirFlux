@@ -5,6 +5,7 @@ import lombok.*;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -29,8 +30,12 @@ public class FlightInstanceCabin {
 
     private Integer bookedSeats = 0;
 
-    // todo: seat instance
-//    private List<SeatInstance> seatInstanceList = new ArrayList<>();
+    // seat instance
+    @OneToMany(mappedBy = "flightInstanceCabin",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true, fetch = FetchType.LAZY
+    )
+    private List<SeatInstance> seatInstanceList = new ArrayList<>();
 
     private Integer getAvailableSeats() {
         return totalSeats - bookedSeats;

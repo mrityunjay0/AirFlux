@@ -3,6 +3,7 @@ package com.airflux.seatService.mapper;
 import com.airflux.payload.request.CabinClassRequest;
 import com.airflux.payload.response.CabinClassResponse;
 import com.airflux.seatService.entity.CabinClass;
+import com.airflux.seatService.entity.SeatMap;
 
 public class CabinClassMapper {
 
@@ -32,7 +33,7 @@ public class CabinClassMapper {
 
 
     // Entity -> Response
-    public static CabinClassResponse toResponse(CabinClass entity) {
+    public static CabinClassResponse toResponse(CabinClass entity, SeatMap seatMap) {
 
         if (entity == null) return null;
 
@@ -44,6 +45,7 @@ public class CabinClassMapper {
                 .code(entity.getCode())
                 .description(entity.getDescription())
                 .aircraftId(entity.getAircraftId())
+                .seatMapResponse(seatMap != null ? SeatMapMapper.toResponse(seatMap) : null)
                 .displayOrder(entity.getDisplayOrder())
                 .isActive(entity.getIsActive())
                 .isBookable(entity.getIsBookable())

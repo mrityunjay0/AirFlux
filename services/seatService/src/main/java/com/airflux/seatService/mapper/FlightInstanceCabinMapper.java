@@ -4,6 +4,9 @@ import com.airflux.payload.request.FlightInstanceCabinRequest;
 import com.airflux.payload.response.FlightInstanceCabinResponse;
 import com.airflux.seatService.entity.CabinClass;
 import com.airflux.seatService.entity.FlightInstanceCabin;
+import com.airflux.seatService.entity.SeatMap;
+
+import java.util.stream.Collectors;
 
 
 public class FlightInstanceCabinMapper {
@@ -31,12 +34,12 @@ public class FlightInstanceCabinMapper {
                 .cabinClassType(fic.getCabinClass() != null ? fic.getCabinClass().getType() : null)
 
                 .cabinClassResponse(fic.getCabinClass() != null ?
-                        CabinClassMapper.toResponse(fic.getCabinClass()) : null)
+                        CabinClassMapper.toResponse(fic.getCabinClass(), fic.getCabinClass().getSeatMap()) : null)
 
-                // todo: seatInstance
-//                .seats(fic.getSeats() != null ?
-//                        fic.getSeats().stream().map(SeatInstanceMapper::toResponse)
-//                                .collect(Collectors.toList()) : null)
+                // seatInstance
+                .seatInstanceResponseList(fic.getSeatInstanceList() != null ?
+                        fic.getSeatInstanceList().stream().map(SeatInstanceMapper::toResponse)
+                                .collect(Collectors.toList()) : null)
 
                 .seatMapResponse(fic.getCabinClass() != null && fic.getCabinClass().getSeatMap() != null ?
                         SeatMapMapper.toSimpleResponse(fic.getCabinClass().getSeatMap()) : null)

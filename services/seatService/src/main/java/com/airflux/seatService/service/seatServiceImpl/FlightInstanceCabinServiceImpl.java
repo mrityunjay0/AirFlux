@@ -12,6 +12,7 @@ import com.airflux.seatService.entity.SeatMap;
 import com.airflux.seatService.mapper.FlightInstanceCabinMapper;
 import com.airflux.seatService.repository.CabinClassRepository;
 import com.airflux.seatService.repository.FlightInstanceCabinRepository;
+import com.airflux.seatService.repository.SeatInstanceRepository;
 import com.airflux.seatService.repository.SeatMapRepository;
 import com.airflux.seatService.service.FlightInstanceCabinService;
 import org.springframework.data.domain.Page;
@@ -24,13 +25,15 @@ import java.util.List;
 public class FlightInstanceCabinServiceImpl implements FlightInstanceCabinService {
 
     private final CabinClassRepository cabinClassRepository;
-    private final SeatMapRepository seatMapRepository;
     private final FlightInstanceCabinRepository flightInstanceCabinRepository;
+    private final SeatInstanceRepository seatInstanceRepository;
+    private final SeatMapRepository seatMapRepository;
 
-    public FlightInstanceCabinServiceImpl(CabinClassRepository cabinClassRepository, SeatMapRepository seatMapRepository, FlightInstanceCabinRepository flightInstanceCabinRepository) {
+    public FlightInstanceCabinServiceImpl(CabinClassRepository cabinClassRepository, FlightInstanceCabinRepository flightInstanceCabinRepository, SeatInstanceRepository seatInstanceRepository, SeatMapRepository seatMapRepository) {
         this.cabinClassRepository = cabinClassRepository;
-        this.seatMapRepository = seatMapRepository;
         this.flightInstanceCabinRepository = flightInstanceCabinRepository;
+        this.seatInstanceRepository = seatInstanceRepository;
+        this.seatMapRepository = seatMapRepository;
     }
 
 
@@ -77,7 +80,9 @@ public class FlightInstanceCabinServiceImpl implements FlightInstanceCabinServic
                 })
                 .toList();
 
-        seatInstancesR
+        seatInstanceRepository.saveAll(seatInstances);
+        saved.setSeatInstanceList(seatInstances);
+
         return FlightInstanceCabinMapper.toResponse(saved);
     }
 
