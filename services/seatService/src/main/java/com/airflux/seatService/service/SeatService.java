@@ -11,6 +11,7 @@ public interface SeatService {
 
     // Only for dev but prod.
     List<SeatResponse> getAllSeats();
+    SeatResponse getSeatById(Long seatId);
 
-    SeatResponse createSeat(SeatRequest seatRequest);
+    SeatResponse updateSeat(Long id, SeatRequest seatRequest);
 }

@@ -10,6 +10,7 @@ import com.airflux.seatService.mapper.SeatMapMapper;
 import com.airflux.seatService.repository.CabinClassRepository;
 import com.airflux.seatService.repository.SeatMapRepository;
 import com.airflux.seatService.service.SeatMapService;
+import com.airflux.seatService.service.SeatService;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -17,10 +18,12 @@ public class SeatMapServiceImpl implements SeatMapService {
 
     private final SeatMapRepository seatMapRepository;
     private final CabinClassRepository cabinClassRepository;
+    private final SeatService seatService;
 
-    public SeatMapServiceImpl(SeatMapRepository seatMapRepository, CabinClassRepository cabinClassRepository) {
+    public SeatMapServiceImpl(SeatMapRepository seatMapRepository, CabinClassRepository cabinClassRepository, SeatService seatService) {
         this.seatMapRepository = seatMapRepository;
         this.cabinClassRepository = cabinClassRepository;
+        this.seatService = seatService;
     }
 
 
@@ -42,7 +45,8 @@ public class SeatMapServiceImpl implements SeatMapService {
         SeatMap seatMap = SeatMapMapper.toEntity(seatMapRequest, cabinClass, airlineId);
         SeatMap savedSeatMap = seatMapRepository.save(seatMap);
 
-        // todo: generate seats for seatMap
+        // generating seats for seatMap
+        seatService.generateSeats(savedSeatMap.getId());
 
         return SeatMapMapper.toResponse(savedSeatMap);
     }

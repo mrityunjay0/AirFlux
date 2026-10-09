@@ -3,6 +3,8 @@ package com.airflux.seatService.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
+
 @Entity
 @Getter
 @Setter
@@ -29,9 +31,11 @@ public class SeatMap {
     @Column(nullable = false)
     private Long airlineId;
 
-    // todo: watch
-//    @OneToMany
-//    private List<Seat> seats;
+    @OneToMany(mappedBy = "seatMap",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    private List<Seat> seats;
 
     @OneToOne
     private CabinClass cabinClass;

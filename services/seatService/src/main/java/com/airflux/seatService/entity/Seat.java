@@ -54,6 +54,12 @@ public class Seat {
 
     private Boolean hasExtraWidth = false;
 
+    private Boolean hasBassinet = false;
+
+    private Boolean isNearLavatory = false;
+
+    private Boolean isNearGallery = false;
+
     private Integer seatPitch;
     private Integer seatWidth;
 

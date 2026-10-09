@@ -41,6 +41,11 @@ public class SeatRequest {
     private Boolean hasExtraLegRoom;
     private Boolean hasPowerOutlet;
     private Boolean hasExtraWidth;
+    private Boolean hasBassinet;
+
+    private Boolean isNearLavatory;
+    private Boolean isNearGallery;
+    private Boolean hasTvScreen;
 
     private Integer seatPitch;
     private Integer seatWidth;

@@ -5,9 +5,11 @@ import com.airflux.payload.exception.DuplicateResourceException;
 import com.airflux.payload.exception.ResourceNotFoundException;
 import com.airflux.payload.request.SeatRequest;
 import com.airflux.payload.response.SeatResponse;
+import com.airflux.seatService.entity.CabinClass;
 import com.airflux.seatService.entity.Seat;
 import com.airflux.seatService.entity.SeatMap;
 import com.airflux.seatService.mapper.SeatMapper;
+import com.airflux.seatService.repository.CabinClassRepository;
 import com.airflux.seatService.repository.SeatMapRepository;
 import com.airflux.seatService.repository.SeatRepository;
 import com.airflux.seatService.service.SeatService;
@@ -20,10 +22,12 @@ public class SeatServiceImpl implements SeatService {
 
     private final SeatRepository seatRepository;
     private final SeatMapRepository seatMapRepository;
+    private final CabinClassRepository cabinClassRepository;
 
-    public SeatServiceImpl(SeatRepository seatRepository, SeatMapRepository seatMapRepository) {
+    public SeatServiceImpl(SeatRepository seatRepository, SeatMapRepository seatMapRepository, CabinClassRepository cabinClassRepository) {
         this.seatRepository = seatRepository;
         this.seatMapRepository = seatMapRepository;
+        this.cabinClassRepository = cabinClassRepository;
     }
 
 
@@ -109,7 +113,37 @@ public class SeatServiceImpl implements SeatService {
     }
 
     @Override
-    public SeatResponse createSeat(SeatRequest seatRequest) {
-        return null;
+    public SeatResponse getSeatById(Long seatId) {
+
+        Seat seat = seatRepository.findById(seatId).orElseThrow(
+                () -> new ResourceNotFoundException("No seat found for given id")
+        );
+
+        return SeatMapper.toResponse(seat);
+    }
+
+    @Override
+    public SeatResponse updateSeat(Long id, SeatRequest seatRequest) {
+
+        Seat seat = seatRepository.findById(id).orElseThrow(
+                () -> new ResourceNotFoundException("No seat found for given id")
+        );
+
+        SeatMap seatMap = seatMapRepository.findById(seatRequest.getSeatMapId()).orElseThrow(
+                () -> new ResourceNotFoundException("No seat map found for given id")
+        );
+
+        CabinClass cabinClass = null;
+
+        if(seatRequest.getCabinClassId() != null) {
+            cabinClass = cabinClassRepository.findById(seatRequest.getCabinClassId()).orElseThrow(
+                    () -> new ResourceNotFoundException("No cabin class found for given id")
+            );
+        }
+
+        SeatMapper.updateEntity(seatRequest, seat, seatMap, cabinClass);
+        Seat savedSeat = seatRepository.save(seat);
+
+        return SeatMapper.toResponse(savedSeat);
     }
 }
