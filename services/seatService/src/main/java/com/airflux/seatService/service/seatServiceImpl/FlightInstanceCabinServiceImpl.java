@@ -1,10 +1,13 @@
 package com.airflux.seatService.service.seatServiceImpl;
 
+import com.airflux.payload.enums.SeatAvailabilityStatus;
+import com.airflux.payload.enums.SeatType;
 import com.airflux.payload.exception.ResourceNotFoundException;
 import com.airflux.payload.request.FlightInstanceCabinRequest;
 import com.airflux.payload.response.FlightInstanceCabinResponse;
 import com.airflux.seatService.entity.CabinClass;
 import com.airflux.seatService.entity.FlightInstanceCabin;
+import com.airflux.seatService.entity.SeatInstance;
 import com.airflux.seatService.entity.SeatMap;
 import com.airflux.seatService.mapper.FlightInstanceCabinMapper;
 import com.airflux.seatService.repository.CabinClassRepository;
@@ -14,6 +17,8 @@ import com.airflux.seatService.service.FlightInstanceCabinService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class FlightInstanceCabinServiceImpl implements FlightInstanceCabinService {
@@ -51,8 +56,28 @@ public class FlightInstanceCabinServiceImpl implements FlightInstanceCabinServic
 
         FlightInstanceCabin saved = flightInstanceCabinRepository.save(fic);
 
-        // todo: generate seat instance
+        // generate seat instance
+        List<SeatInstance> seatInstances = seatMap.getSeats().stream()
+                .map(seat -> {
+                    Double premiumSurcharge = getPremiumSurcharge(
+                            seat.getSeatType(),
+                            1000.0,
+                            500.0
+                    );
+                    return SeatInstance.builder()
+                            .flightId(request.getFlightId())
+                            .status(SeatAvailabilityStatus.AVAILABLE)
+                            .flightInstanceId(request.getFlightInstanceId())
+                            .flightInstanceCabin(saved)
+                            .seat(seat)
+                            .isAvailable(true)
+                            .isBooked(false)
+                            .premiumSurCharge(premiumSurcharge)
+                            .build();
+                })
+                .toList();
 
+        seatInstancesR
         return FlightInstanceCabinMapper.toResponse(saved);
     }
 
@@ -115,5 +140,18 @@ public class FlightInstanceCabinServiceImpl implements FlightInstanceCabinServic
         );
 
         flightInstanceCabinRepository.delete(fic);
+    }
+
+
+    private Double getPremiumSurcharge(SeatType seatType,
+                                       Double windowSurcharge,
+                                       Double aisleSurcharge) {
+        if (seatType == null) return 0.0;
+
+        return switch (seatType) {
+            case WINDOW -> windowSurcharge != null ? windowSurcharge : 0.0;
+            case AISLE -> aisleSurcharge != null ? aisleSurcharge : 0.0;
+            default -> 0.0;
+        };
     }
 }
