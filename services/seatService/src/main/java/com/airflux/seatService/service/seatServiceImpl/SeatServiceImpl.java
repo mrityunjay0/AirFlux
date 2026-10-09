@@ -13,11 +13,13 @@ import com.airflux.seatService.repository.CabinClassRepository;
 import com.airflux.seatService.repository.SeatMapRepository;
 import com.airflux.seatService.repository.SeatRepository;
 import com.airflux.seatService.service.SeatService;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Service
 public class SeatServiceImpl implements SeatService {
 
     private final SeatRepository seatRepository;

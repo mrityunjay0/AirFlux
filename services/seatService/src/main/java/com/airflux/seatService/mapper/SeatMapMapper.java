@@ -70,4 +70,14 @@ public class SeatMapMapper {
             seatMap.setRightSeatsPerRow(request.getRightSeatsPerRow());
         }
     }
+
+    public static SeatMapResponse toSimpleResponse(SeatMap seatMap) {
+
+        return SeatMapResponse.builder()
+                .totalRows(seatMap.getTotalRows())
+                .leftSeatsPerRow(seatMap.getLeftSeatsPerRow())
+                .rightSeatsPerRow(seatMap.getRightSeatsPerRow())
+                .build();
+    }
+
 }
