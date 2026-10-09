@@ -56,7 +56,6 @@ public class Seat {
 
     private Integer seatPitch;
     private Integer seatWidth;
-    private Integer reclineAngle;
 
     @ManyToOne(fetch = FetchType.LAZY)
     private SeatMap seatMap;
@@ -89,8 +88,8 @@ public class Seat {
 
         Double totalPrice = basePrice != null ? basePrice : 0;
 
-        if (premiumSuperCharge != null && premiumSuperCharge >= 0) {
-            totalPrice += totalPrice + premiumSuperCharge;
+        if (premiumSurCharge != null && premiumSurCharge >= 0) {
+            totalPrice += totalPrice + premiumSurCharge;
         }
 
         return totalPrice;
