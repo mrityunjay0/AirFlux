@@ -38,18 +38,23 @@ public class BaggagePolicy {
 
     private Double cabinBaggageWeightPerPiece;
 
+    @Builder.Default
     private Integer cabinBaggagePieces = 1;
 
     private Double checkInBaggageMaxWeight;
 
+    @Builder.Default
     private Integer chckinBaggagePeices = 1;
 
     private Double checkInBaggageWeightPerPiece;
 
+    @Builder.Default
     private Integer freeCheckedBagsAllowance = 0;
 
+    @Builder.Default
     private Boolean priorityBaggage = false;
 
+    @Builder.Default
     private Boolean extraBaggageAllowance = false;
 
     @CreationTimestamp

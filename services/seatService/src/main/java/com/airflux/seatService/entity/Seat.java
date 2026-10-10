@@ -38,26 +38,37 @@ public class Seat {
 
     private Double premiumSurCharge;
 
+    @Builder.Default
     private Boolean isAvailable = true;
 
+    @Builder.Default
     private Boolean isBlocked = false;
 
+    @Builder.Default
     private Boolean isEmergencyExit = false;
 
+    @Builder.Default
     private Boolean isActive = true;
 
+    @Builder.Default
     private Boolean hasExtraLegRoom = false;
 
+    @Builder.Default
     private Boolean hasPowerOutlet = false;
 
+    @Builder.Default
     private Boolean hasTvScreen = false;
 
+    @Builder.Default
     private Boolean hasExtraWidth = false;
 
+    @Builder.Default
     private Boolean hasBassinet = false;
 
+    @Builder.Default
     private Boolean isNearLavatory = false;
 
+    @Builder.Default
     private Boolean isNearGallery = false;
 
     private Integer seatPitch;

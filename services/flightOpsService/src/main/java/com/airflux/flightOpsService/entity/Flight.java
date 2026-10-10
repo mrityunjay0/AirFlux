@@ -37,6 +37,7 @@ public class Flight {
     @Column(nullable = false)
     private Long arrivalAirportId;
 
+    @Builder.Default
     @Enumerated(EnumType.STRING)
     private FlightStatus flightStatus = FlightStatus.SCHEDULED;
 

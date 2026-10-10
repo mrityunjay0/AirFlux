@@ -35,15 +35,19 @@ public class Aircraft {
     @Column(nullable = false)
     private Integer seatingCapacity;
 
+    @Builder.Default
     @Column(name = "economy_seats")
     private Integer economySeats = 0;
 
+    @Builder.Default
     @Column(name = "premium_economy_seats")
     private Integer premiumEconomySeats = 0;
 
+    @Builder.Default
     @Column(name = "business_seats")
     private Integer businessSeats = 0;
 
+    @Builder.Default
     @Column(name = "first_class_seats")
     private Integer firstClassSeats = 0;
 
@@ -61,10 +65,12 @@ public class Aircraft {
 
     private LocalDate nextMaintenanceDate;
 
+    @Builder.Default
     @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false, length = 20)
     private AircraftStatus aircraftStatus = AircraftStatus.ACTIVE;
 
+    @Builder.Default
     private Boolean isAvailable = true;
 
     @ManyToOne

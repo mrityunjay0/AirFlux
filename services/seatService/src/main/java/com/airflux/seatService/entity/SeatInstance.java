@@ -35,9 +35,13 @@ public class SeatInstance {
     @ManyToOne(fetch = FetchType.LAZY)
     private Seat seat;
 
+    @Builder.Default
     private SeatAvailabilityStatus status = SeatAvailabilityStatus.AVAILABLE;
 
+    @Builder.Default
     private Boolean isBooked = false;
+
+    @Builder.Default
     private Boolean isAvailable = true;
 
     private Double fare;

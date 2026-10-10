@@ -41,6 +41,7 @@ public class Airline {
 
     private String website;
 
+    @Builder.Default
     @Enumerated(EnumType.STRING)
     private AirlineStatus status = AirlineStatus.ACTIVE;
 

@@ -53,6 +53,7 @@ public class FlightInstance {
 
     private Integer maxAdvanceBookingDays;
 
+    @Builder.Default
     private Boolean isActive = true;
 
 

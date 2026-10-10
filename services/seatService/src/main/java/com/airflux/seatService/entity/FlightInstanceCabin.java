@@ -28,9 +28,11 @@ public class FlightInstanceCabin {
 
     private Integer totalSeats;
 
+    @Builder.Default
     private Integer bookedSeats = 0;
 
     // seat instance
+    @Builder.Default
     @OneToMany(mappedBy = "flightInstanceCabin",
             cascade = CascadeType.ALL,
             orphanRemoval = true, fetch = FetchType.LAZY
