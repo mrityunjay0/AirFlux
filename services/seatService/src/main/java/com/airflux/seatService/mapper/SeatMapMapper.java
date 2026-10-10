@@ -3,7 +3,11 @@ package com.airflux.seatService.mapper;
 import com.airflux.payload.request.SeatMapRequest;
 import com.airflux.payload.response.SeatMapResponse;
 import com.airflux.seatService.entity.CabinClass;
+import com.airflux.seatService.entity.Seat;
 import com.airflux.seatService.entity.SeatMap;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class SeatMapMapper {
 
@@ -25,10 +29,23 @@ public class SeatMapMapper {
 
         if (seatMap == null) return null;
 
-        int totalSeats =
-                seatMap.getTotalRows()
-                        * (seatMap.getLeftSeatsPerRow()
-                        + seatMap.getRightSeatsPerRow());
+        List<Seat> seats = seatMap.getSeats();
+
+        int totalSeats = seats != null ? seats.size() : 0;
+
+        int availableSeats = seats != null ? (int) seats.stream().filter(seat ->
+                Boolean.TRUE.equals(seat.getIsAvailable()) &&
+                        Boolean.TRUE.equals(seat.getIsActive()) &&
+                        !Boolean.TRUE.equals(seat.getIsBlocked())).count() : 0;
+
+        int windowSeats = seats != null ? (int) seats.stream().filter(seat ->
+                seat.getSeatType().name().contains("WINDOW")).count() : 0;
+
+        int aisleSeats = seats != null ? (int) seats.stream().filter(seat ->
+                seat.getSeatType().name().contains("AISLE")).count() : 0;
+
+        int middleSeats = seats != null ? (int) seats.stream().filter(seat ->
+                seat.getSeatType().name().contains("MIDDLE")).count() : 0;
 
 
         return SeatMapResponse.builder()
@@ -47,6 +64,13 @@ public class SeatMapMapper {
                 .cabinClassName(seatMap.getCabinClass() != null
                                 ? seatMap.getCabinClass().getType() : null)
                 .totalSeats(totalSeats)
+                .availableSeats(availableSeats)
+                .occupiedSeats(totalSeats - availableSeats)
+                .seats(seats != null ? seats.stream().map(SeatMapper::toResponse)
+                        .collect(Collectors.toList()) : null)
+                .widowSeats(windowSeats)
+                .middleSeats(middleSeats)
+                .aisleSeats(aisleSeats)
                 .build();
     }
 
